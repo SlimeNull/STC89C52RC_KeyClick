@@ -6,8 +6,14 @@ extern void on_k3_click(void (*handler)());
 extern void on_k4_click(void (*handler)());
 extern void on_anyk_click(void (*handler)(int));
 
+char led_run = 0;
+
 void switch_led(int index) {
 	P2 ^= ((1 << (index * 2)) + (1 << (index * 2 + 1)));
+}
+
+void led_run_loop() {
+	
 }
 
 void main()
