@@ -4,12 +4,14 @@
 
 ## 使用:
 
-1. 将仓库中 loops.c 文件添加到你的项目中
-2. 在程序中添加主循环逻辑:
+1. 将仓库中 btnclick.h 和 btnclick.c 文件添加到你的项目中
+2. 引用头文件
+   ```cpp
+   #include "btnclick.h"
+   ```
+3. 在程序中添加主循环逻辑:
 
     ```cpp
-    extern void button_loop();   // 声明按钮循环函数
-
     void main()
     {
         // 其他代码
@@ -17,12 +19,12 @@
         while (1)  // 程序主循环
         {
             // 其他代码
-            button_loop();     // 按钮检查
+            btnclick_loop();     // 按钮检查
         }
     }
     ```
 
-3. 定义按键按下处理函数:
+4. 定义按键按下处理函数:
 
     ```cpp
     void key1click()
@@ -31,18 +33,16 @@
     }
     ```
 
-4. 订阅按键按下事件
+5. 订阅按键按下事件
 
     ```cpp
-    extern void on_k1_click(void (*handler)());
-
     void main()
     {
         on_k1_click(key1click);   // 订阅按键按下事件
 
         while (1)
         {
-            button_loop();        // 主循环
+            btnclick_loop();        // 主循环
         }
     }
     ```
@@ -57,19 +57,14 @@ void on_k1_click(void (*handler)());        // 订阅按钮1按下事件
 void on_k2_click(void (*handler)());        // 订阅按钮2按下事件
 void on_k3_click(void (*handler)());        // 订阅按钮3按下事件
 void on_k4_click(void (*handler)());        // 订阅按钮4按下事件
-void on_anyk_click(void (*handler)(int));   // 订阅任意按钮按下事件
+void on_anyk_click(void (*handler)(int));   // 订阅任意按钮按下事件, 参数为按钮索引
 ```
 
 ## 代码示例
 
 ```cpp
 #include <REGX52.H>
-extern void button_loop();
-extern void on_k1_click(void (*handler)());
-extern void on_k2_click(void (*handler)());
-extern void on_k3_click(void (*handler)());
-extern void on_k4_click(void (*handler)());
-extern void on_anyk_click(void (*handler)(int));
+#include "btnclick.h"
 
 void switch_led(int index) {
 	P2 ^= ((1 << (index * 2)) + (1 << (index * 2 + 1)));
@@ -81,7 +76,7 @@ void main()
 	
 	while(1)
 	{
-		button_loop();
+		btnclick_loop();
 	}
 }
 ```
